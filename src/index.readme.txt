@@ -1,0 +1,42 @@
+使用了react-redux 更优雅的管理数据
+index.js
+App.js
+
+安装：
+cnpm i react-redux -S
+
+react-redux :回归原始
+Provider原理：
+使用Provider组件嵌套App提供store，
+不用将命令对象通过父组件传递，直接要在使用的组件中导入connect连接器，让连接器重新装饰该子组件
+直接将命令绑定到props，自动dispatch，不用再次调用store.dispatch，直接props.命令对象
+
+【步骤】：
+1.index.js
+  这里面将App放入Provider组件，并传递store：
+    let store = createStore(reducer, applyMiddleware(thunk))
+    ReactDOM.render(
+        <Provider store={store}>
+            <App/>
+        </Provider>, document.getElementById('root')
+    );
+
+2.不用将命令对象通过父组件传递，直接要在使用的组件中导入connect连接器，让连接器重新装饰该子组件
+import {connect} from 'react-redux'
+
+直接将命令绑定到props，自动dispatch，不用再次调用store.dispatch，直接props.命令对象
+导入命令对昂，绑定到connect对象中，重新封装App组件（装饰）
+import {addCanno, removeCanno, addCannoAsync} from './redux3/redux3'
+
+const mapStateToProps = (state) => {
+    return {
+        num: state
+    }
+}
+const mapDispatchToProps = { //也就是将dispatch分发到props上，不用在子组件中再次进行调用store.dispatch,直接调用props.action对象即可
+    addCanno, removeCanno, addCannoAsync
+}
+App = connect(mapStateToProps, mapDispatchToProps)(App)
+export default App;
+
+
