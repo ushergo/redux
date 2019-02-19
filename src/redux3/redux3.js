@@ -1,7 +1,8 @@
 const add = '加坦克炮'
 const remove = '减坦克炮'
 
-//2.reducer 定义你将来要做的事情(函数)
+//2.reducer 定义你将来要做的事情(函数)，返回一个新的state =>该sate实际就是从组件中搬过来的state，换句话说该state返回给组件使用
+//如APP.JS中的  this.props.num 是通过mapStateToProps 来使用的
 export function reducer(state = 0, action) {
     switch (action.type) {
         case '加坦克炮':
